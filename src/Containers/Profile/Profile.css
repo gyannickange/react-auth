@@ -1,0 +1,18 @@
+.Profile .header {
+  padding: 5rem 0;
+  color: #fff;
+  background: -webkit-gradient(150deg, #2d1582 0%, #19a0ff 100%);
+  background: linear-gradient(150deg, #2d1582 0%, #19a0ff 100%);
+}
+
+.Profile .header h1 {
+  font-size: 1.8rem;
+}
+
+.Profile .info {
+  padding: 9rem 0;
+}
+
+.Profile .info h3 {
+  padding-bottom: 1rem;
+}

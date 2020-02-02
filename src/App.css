@@ -1,0 +1,83 @@
+.btn {
+  cursor: pointer;
+  display: inline-block;
+  font-weight: 400;
+  color: #212529;
+  text-align: center;
+  vertical-align: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  background-color: transparent;
+  border: 1px solid transparent;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: .25rem;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.btn-outline-black,
+.btn-black,
+.btn-outline-white,
+.btn-white {
+  padding: 0.7rem 1.5rem;
+  border-radius: 0;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.btn-black {
+  border: 2px solid rgba(0, 0, 0, 0.8);
+  background-color: #000;
+  color: #fff !important;
+}
+
+.btn-black:hover {
+  border: 2px solid #000;
+  color: #000 !important;
+  background-color: #fff !important;
+}
+
+.btn-outline-black {
+  border: 2px solid rgba(0, 0, 0, 0.8);
+}
+
+.btn-outline-black:hover {
+  color: rgba(0, 0, 0, 0.918);
+  background-color: rgba(0, 0, 0, 0.2);
+  text-decoration: none;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-controle {
+  display: block;
+  width: 100%;
+  padding: 0.6rem .75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  font-weight: 300;
+  color: rgba(0, 0, 0, 0.8);
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 2px solid #dedede;
+  border-radius: 4px;
+  transition: border-color 0.15s ease-in-out,box-shadow 0.15s ease-in-out;
+}
+
+.form-controle:focus {
+  border-color: rgba(0, 0, 0, 0.8);
+}
+
+.img-fluid {
+  border-radius: 3px;
+  max-width: 100%;
+}
+
+.p-06 {
+  padding: 0 0.6rem;
+}

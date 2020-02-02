@@ -1,0 +1,36 @@
+.Navigation .navbar-nav {
+  float: right;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.Navigation .navbar-nav .nav-item {
+  padding-left: 1rem;
+  display: inline-block;
+}
+
+.Navigation .navbar-nav .nav-item .nav-link {
+  display: inline-block;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.Navigation .navbar-nav {
+  float: right;
+  margin: 1rem 0 !important;
+}
+
+.Navigation .navbar-nav .nav-item .nav-link {
+  color: #000;
+}
+
+.Navigation .navbar-nav .nav-item .nav-link.active {
+  color: rgba(0, 0, 0, 0.43);
+}
+
+@media (min-width: 767px) {
+  .Navigation .navbar-nav .nav-item {
+    padding-left: 2rem;
+  }
+}

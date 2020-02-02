@@ -1,0 +1,76 @@
+.Auth {
+  position: relative;
+  min-height: 100vh;
+}
+
+.Auth:before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  background: -webkit-gradient(150deg, #2d1582 0%, #19a0ff 100%);
+  background: linear-gradient(150deg, #2d1582 0%, #19a0ff 100%);
+  top: 0px;
+  left: 0px;
+  bottom: 0px;
+  right: 0px;
+}
+
+.Auth .spacing {
+  padding: 6rem 0;
+}
+
+.Auth .form-header {
+  text-align: center;
+  padding: 15% 0;
+}
+
+.Auth .auth-form {
+  max-width: 450px;
+  margin: 0px auto;
+  background-color: #fff;
+  border-radius: 6px;
+  -webkit-box-shadow: 0px 0px 40px rgba(0,0,0,0.1);
+  box-shadow: 0px 0px 40px rgba(0,0,0,0.1);
+}
+
+.Auth .auth-form-xl {
+  max-width: 650px;
+}
+
+.Auth .auth-name {
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+  padding-bottom: 1rem;
+  margin-bottom: 2rem;
+  position: relative;
+  z-index: 1;
+  padding-left: 80px;
+}
+
+.Auth .auth-name:after {
+  content: "";
+  background-color: #d0d0d0;
+  width: 32px;
+  height: 7px;
+  border-radius: 2px;
+  display: block;
+  position: absolute;
+  bottom: -4px;
+  left: 80px;
+}
+
+.Auth .form-content {
+  padding:  0 4rem;
+}
+
+.Auth .form-footer {
+  text-align: center;
+  padding: 1rem 0 2rem;
+}
+
+.Auth .form-footer .btn-black  {
+  margin-bottom: 1rem;
+}
+
+.react-datepicker-wrapper {
+  display: block !important;
+}

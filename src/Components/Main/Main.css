@@ -1,0 +1,114 @@
+.Main .overlay-gradient {
+  position: relative;
+}
+
+.Main .overlay-gradient:before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background: rgb(0,0,0);
+  background: -moz-radial-gradient(circle, rgba(255,255,255,0.4) 0%, rgba(0,0,0,0.6) 100%);
+  background: -webkit-radial-gradient(circle, rgba(255,255,255,0.4) 0%, rgba(0,0,0,0.6) 100%);
+  background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, rgba(0,0,0,0.6) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#fff",endColorstr="#000",GradientType=1);
+}
+
+.Main .overlay-gradient:after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.Main .banner {
+  background: url(../../assets/images/bg1.jpg) center center no-repeat;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 80vh;
+  min-height: 500px;
+}
+
+.Main .banner .banner-title {
+  color: #fff;
+  margin: 0 0 2rem;
+}
+
+.Main .banner .banner-title {
+  font-size: 3.29rem;
+  line-height: 3.57rem;
+}
+
+.Main .banner-page .banner-title {
+  font-size: 2.21rem;
+  line-height: 3rem;
+  color: #fff;
+  margin: 0 0 2rem;
+}
+
+.Main .banner .banner-subtitle {
+  color: rgb(255, 255, 255);
+  margin: 0 0 2rem;
+}
+
+.Main .headline {
+  max-width: 91.666667%;
+  margin: 0 auto;
+  position: relative;
+  z-index: 3;
+  border: 6px solid #fff;
+  padding: 2.5rem;
+}
+
+.Main .headline .content {
+  max-width: 500px;
+}
+
+@media (min-width: 992px) {
+  .Main .banner {
+    background-attachment: fixed;
+  }
+
+  .Main .headline {
+    max-width: 75%;
+  }
+}
+
+@media (min-width: 1200px) {
+  .Main .headline {
+    max-width: 66.666667%;
+  }
+}
+
+.Main .about {
+  padding: 6rem 0;
+}
+
+@media (min-width: 767px) {
+  .Main .about {
+    padding: 10rem 0;
+  }
+}
+
+.Main .about h3 {
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin: 0 0 1rem;
+}
+
+.Main .about h2 {
+  letter-spacing: 0;
+  font-size: 2.215rem;
+  line-height: 3rem;
+  margin: 0 0 1.715rem;
+}
+
+.Main .about p {
+  margin: 0 0 1.715rem;
+}
