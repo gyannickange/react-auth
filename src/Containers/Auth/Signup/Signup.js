@@ -15,14 +15,10 @@ class Signup extends Component {
     this.state = {
       email: '',
       password: '',
+      passwordConfirm: '',
       phone: '',
       address: '',
-      birthDay: '',
-      question: {
-        first: '',
-        second: '',
-        third: ''
-      }
+      birthDay: ''
     }
 
     this.Auth = new AuthService();
@@ -51,23 +47,12 @@ class Signup extends Component {
                     <label htmlFor="emailInput">Email</label>
                     <input 
                       className="form-controle"
-                      type="email" name="email"
+                      type="email"
+                      name="email"
                       onChange={this.handleChange}
                       required 
                     />
                   </div>
-                  <div className="form-group col-lg-6">
-                    <label htmlFor="passwordInput">Password</label>
-                    <input 
-                      className="form-controle"
-                      type="password"
-                      name="password"
-                      onChange={this.handleChange}
-                      required
-                    />
-                  </div>
-                </div>
-                <div className="row p-06">
                   <div className="form-group col-lg-6">
                     <label htmlFor="phoneInput">Phone</label>
                     <input 
@@ -78,17 +63,42 @@ class Signup extends Component {
                       required 
                     />
                   </div>
+                </div>
+                
+                <div className="row p-06">
                   <div className="form-group col-lg-6">
-                    <label htmlFor="passwordInput">Address</label>
+                    <label htmlFor="passwordInput">Password</label>
                     <input
                       className="form-controle"
-                      type="text" name="address"
+                      type="password"
+                      name="password"
+                      onChange={this.handleChange}
+                      required
+                    />
+                  </div>
+                  <div className="form-group col-lg-6">
+                    <label htmlFor="passwordConfirmInput">Password confirmation</label>
+                    <input
+                      className="form-controle"
+                      type="password"
+                      name="passwordConfirm"
                       onChange={this.handleChange}
                       required
                     />
                   </div>
                 </div>
+
                 <div className="row p-06">
+                  <div className="form-group col-lg-6">
+                    <label htmlFor="passwordInput">Address</label>
+                    <input
+                      className="form-controle"
+                      type="text"
+                      name="address"
+                      onChange={this.handleChange}
+                      required
+                    />
+                  </div>
                   <div className="form-group col-lg-6">
                     <label htmlFor="phoneInput">Date of Birth</label>
                     <DatePicker
@@ -131,21 +141,20 @@ class Signup extends Component {
 
   async handleRegister (e) {
     e.preventDefault();
-    console.log(this.state, 'question')
-		// try {
-    //   const { email, password, phone, address, birthDay, question } = this.state
-    //   const user = {
-    //     email: email,
-    //     password: password,
-    //     phone: phone,
-    //     address: address,
-    //     birthDay: birthDay
-    //   }
-		// 	await this.Auth.signup(user)
-		// 	this.props.history.replace('/profile')
-		// } catch(error) {
-		// 	console.log(error)
-		// }
+		try {
+      const { email, password, phone, address, birthDay } = this.state
+      const user = {
+        email: email,
+        password: password,
+        phone: phone,
+        address: address,
+        birthDay: birthDay
+      }
+			await this.Auth.signup(user)
+			this.props.history.replace('/profile')
+		} catch(error) {
+			console.log(error)
+		}
 	}
 }
 

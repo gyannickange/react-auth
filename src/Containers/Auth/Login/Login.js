@@ -62,9 +62,7 @@ class Login extends Component {
                 <div>
                   Don't have an acompte 
                   <Link to="/signup"> Sign up</Link> or <br />
-                  <button className="btn" onClick={() => this.props.history.goBack()}>
-                    Go back
-                  </button>
+                  <Link className="btn" to="/"> Go to Home </Link>
                 </div>
               </div>
             </form>

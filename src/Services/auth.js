@@ -15,6 +15,11 @@ export default class AuthService {
   login (user) {
     return axios.post(`${this.domain}/login`, {
       user: user
+    }, {
+      headers: {
+        'Access-Control-Allow-Origin': true,
+        'Content-Type': 'application/json',
+      },
     })
       .then(res => {
         this.setToken(res.data.token)
@@ -26,14 +31,14 @@ export default class AuthService {
   }
 
   signup (user) {
-    console.log(user, 'user')
     return axios.post(`${this.domain}/register`, {
       user: user
     }).then(res => {
       this.setToken(res.token)
       return Promise.resolve(res);
     }).catch((err) => {
-      alert('Email is already use')
+      console.log(JSON.parse(JSON.stringify(err)))
+      // alert('Email is already use')
     })
   }
 
@@ -91,6 +96,11 @@ export default class AuthService {
     const decoded = decode(token)
     return axios.put(`${this.domain}/user/${decoded.id}`, {
       user: user
+    },{
+      headers: {
+        'Access-Control-Allow-Origin': true,
+        'Content-Type': 'application/json',
+      }
     })
       .then(res => {
         return Promise.resolve(res.data);
@@ -103,6 +113,11 @@ export default class AuthService {
   updatePassword (user) {
     return axios.put(`${this.domain}/update-password`, {
       user: user
+    },{
+      headers: {
+        'Access-Control-Allow-Origin': true,
+        'Content-Type': 'application/json',
+      }
     })
       .then(res => {
         return Promise.resolve(res.data);

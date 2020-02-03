@@ -17,7 +17,7 @@ class Navigation extends Component {
 
   render () {
     const  auth = this.Auth
-    const props = this.props
+
     return (
       <nav className="Navigation">
         <div className="container">
