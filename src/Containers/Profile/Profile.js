@@ -9,12 +9,11 @@ import Footer from "../../Components/Footer/Footer";
 import "react-datepicker/dist/react-datepicker.css";
 import "./Profile.css";
 
-import path from 'path'
-
 class Profile extends Component {
   constructor (props) {
     super(props);
     this.state = {
+      _id: '',
       email: '',
       password: '',
       phone: '',
@@ -35,15 +34,17 @@ class Profile extends Component {
     if (this.Auth.loggedIn()) {
       const currentUser = this.Auth.currentUser()
       this.setState({
+        _id: currentUser._id,
         email: currentUser.email,
         phone: currentUser.phone,
         address: currentUser.address,
+        password: currentUser.password,
         birthDay: Date.parse(currentUser.birthDay),
       })
     } else {
       this.props.history.replace('/login');
     }
-    console.log(path.dirname('path/users.db'))
+
     this.Auth.getAllUser()
   }
 
@@ -161,23 +162,26 @@ class Profile extends Component {
     });
   };
 
-  async handleUpdateProfile () {
+  async handleUpdateProfile (e) {
     try {
-      const { email, phone, address, birthDay } = this.state
+      const { _id, email, password, phone, address, birthDay } = this.state
       const user = {
+        _id: _id,
         email: email,
+        password: password,
         phone: phone,
         address: address,
         birthDay: birthDay
       }
-      this.Auth.updateUser(user)
-      .then((data) => {
-        this.setState({
-          email: data.user.email,
-          phone: data.user.phone,
-          address: data.user.address,
-          birthDay: Date.parse(data.user.birthDay),
-        })
+      
+      await this.Auth.updateUser(user);
+      const currentUser = await this.Auth.currentUser();
+
+      this.setState({
+        email: currentUser.email,
+        phone: currentUser.phone,
+        address: currentUser.address,
+        birthDay: Date.parse(currentUser.birthDay),
       })
 		} catch(error) {
 			alert(error.message)
@@ -185,20 +189,19 @@ class Profile extends Component {
   }
   
   async handleUpdatePassword (e) {
-    e.preventDefault();
 		try {
-      const { email, currentPassword, newPassword } = this.state
+      const { _id, email, currentPassword, newPassword } = this.state
       const user = {
+        _id: _id,
         email: email,
         currentPassword: currentPassword,
         newPassword: newPassword
       }
 
-      console.log(user, 'console.log(user)')
-      await this.Auth.updatePassword(user)
-        .then(data => {
-          alert('Your password has been correctly updated!')
-        })
+      await this.Auth.updatePassword(user);
+      await this.Auth.currentUser();
+
+      alert('Your password has been correctly updated!');
 		} catch(error) {
 			alert(error.message)
 		}

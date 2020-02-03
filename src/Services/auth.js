@@ -7,13 +7,12 @@ export default class AuthService {
     this.currentUser = this.currentUser.bind(this)
     this.updateUser = this.updateUser.bind(this)
     this.updatePassword = this.updatePassword.bind(this)
-    this.getAllUser = this.getAllUser.bind(this)
   }
 
   login (userData, history) {
-    db.findEmail('users', userData.email, (err, user) => {
+    db.findByEmail('users', userData.email, (err, user) => {
       if (user) {
-        if (userData.pass === user.pass) {
+        if (userData.password === user.password) {
           this.setUser(user)
           history.replace('/profile');
         } else {
@@ -26,7 +25,7 @@ export default class AuthService {
   }
 
   signup (userData, history) {
-    db.findOne('users', { email: userData.email }, (err, user) => {
+    db.findByEmail('users', userData.email, (err, user) => {
       if (user && user.email === userData.email) {
         alert('Email is already existe');
       } else {
@@ -48,7 +47,6 @@ export default class AuthService {
   }
 
   setUser (currentUser) {
-    console.log(currentUser, 'setUser')
     localStorage.setItem('current_user',  JSON.stringify(currentUser));
   }
 
@@ -61,16 +59,28 @@ export default class AuthService {
     return JSON.parse(currentUser);
   }
 
-  updateUser (user) {
-    localStorage.removeItem('current_user');
-    localStorage.setItem('current_user', JSON.stringify(user));
+  updateUser (userData) {
+    db.update('users', userData._id, userData, (err, updatededUser) => {
+      db.findOne('users', userData._id, (err, user) => {
+        localStorage.removeItem('current_user');
+        localStorage.setItem('current_user', JSON.stringify(user));
+      })
+    })
   }
 
-  updatePassword (user) {
-    // const user = this.getUser();
-    // return user
+  updatePassword (userData) {
+    db.findOne('users', { email: userData.email }, (err, user) => {
+      if (user && user.password === userData.password) {
+        db.updatePassword('users', userData._id, user.password, (err, updatededUser) => {
+          db.findOne('users', userData._id, (err, user) => {
+            localStorage.removeItem('current_user');
+            localStorage.setItem('current_user', JSON.stringify(user));
+          })
+        })
+      }
+    })
   }
-
+  
   getAllUser () {
     db.find('users', (err, users) => {
       console.log(users, 'alluser')

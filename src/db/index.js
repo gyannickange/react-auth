@@ -1,17 +1,14 @@
 import Datastore from 'nedb'
-const config = require('../config');
 
 var db = {}
 
 db.users = new Datastore ({
-  filename: `${config.apiURL}/path/users.db`,
+  filename: `https://app-jetcake.herokuapp.com/path/users.db`,
   autoload: true,
   timestampData: true,
 })
 
 db.users.loadDatabase()
-
-console.log(`${config.apiURL}/path/users.db`);
 
 const insert = function(table, item, callback) {
   db[table].insert(item, callback);
@@ -47,6 +44,10 @@ const update = function (table, id, item, callback) {
   db[table].update({ _id: id }, item, { multi: true }, callback)
 }
 
+const updatePassword = function (table, id, password, callback) {
+  db[table].update({ _id: id }, { password: password }, { multi: true }, callback)
+}
+
 export default {
   insert,
   find,
@@ -55,4 +56,5 @@ export default {
   findByEmail,
   remove,
   update,
+  updatePassword
 }
