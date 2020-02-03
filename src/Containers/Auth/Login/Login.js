@@ -80,14 +80,12 @@ class Login extends Component {
 
   handleSubmit (e) {
     e.preventDefault();
+    const { email, password } = this.state
     const user = {
-      email: this.state.email,
-      password: this.state.password,
+      email: email,
+      password: password,
     }
-    this.Auth.login(user)
-      .then(res => {
-        this.props.history.replace('/profile');
-      })
+    this.Auth.login(user, this.props.history)
   }
 }
 

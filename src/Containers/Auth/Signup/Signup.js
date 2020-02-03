@@ -140,21 +140,24 @@ class Signup extends Component {
   };
 
   async handleRegister (e) {
-    e.preventDefault();
-		try {
-      const { email, password, phone, address, birthDay } = this.state
-      const user = {
-        email: email,
-        password: password,
-        phone: phone,
-        address: address,
-        birthDay: birthDay
+    const { email, password, passwordConfirm, phone, address, birthDay } = this.state
+    if (password === passwordConfirm) {
+      e.preventDefault();
+      try {
+        const user = {
+          email: email,
+          password: password,
+          phone: phone,
+          address: address,
+          birthDay: birthDay
+        }
+        await this.Auth.signup(user, this.props.history)
+      } catch (error) {
+        console.log(error)
       }
-			await this.Auth.signup(user)
-			this.props.history.replace('/profile')
-		} catch(error) {
-			console.log(error)
-		}
+    } else {
+      alert('Password and Password confirmation are not the same');
+    }
 	}
 }
 

@@ -1,129 +1,79 @@
-import decode from 'jwt-decode';
-import axios from 'axios';
+import db from '../db/index'
 
 export default class AuthService {
-  constructor (domain) {
-    this.domain = domain || 'https://app-jetcake.herokuapp.com'
-    this.currentUser = this.currentUser.bind(this)
+  constructor () {
     this.login = this.login.bind(this)
     this.signup = this.signup.bind(this)
-    this.getProfile = this.getProfile.bind(this)
+    this.currentUser = this.currentUser.bind(this)
     this.updateUser = this.updateUser.bind(this)
     this.updatePassword = this.updatePassword.bind(this)
+    this.getAllUser = this.getAllUser.bind(this)
   }
 
-  login (user) {
-    return axios.post(`${this.domain}/login`, {
-      user: user
-    }, {
-      headers: {
-        'Access-Control-Allow-Origin': true,
-        'Content-Type': 'application/json',
-      },
-    })
-      .then(res => {
-        this.setToken(res.data.token)
-        return Promise.resolve(res);
-      })
-      .catch((err) => {
-        alert('Email or password not correct')
-      })
-  }
-
-  signup (user) {
-    return axios.post(`${this.domain}/register`, {
-      user: user
-    }).then(res => {
-      this.setToken(res.token)
-      return Promise.resolve(res);
-    }).catch((err) => {
-      console.log(JSON.parse(JSON.stringify(err)))
-      // alert('Email is already use')
-    })
-  }
-
-  loggedIn () {
-    const token = this.getToken()
-    return !!token && !this.isTokenExpired(token) // handwaiving here
-  }
-
-  isTokenExpired (token) {
-    try {
-      const decoded = decode(token);
-      if (decoded.exp < Date.now() / 1000) {
-        return true;
+  login (userData, history) {
+    db.findEmail('users', userData.email, (err, user) => {
+      if (user) {
+        if (userData.pass === user.pass) {
+          this.setUser(user)
+          history.replace('/profile');
+        } else {
+          alert('Incorrect password');
+        }
+      } else {
+        alert('Incorrect email');
       }
-      else {
-        return false;
-      }  
-    }
-    catch (err) {
-      return false;
-    }
+    })
   }
 
-  setToken (idToken) {
-    localStorage.setItem('id_token', idToken)
-  }
-
-  getToken () {
-    return localStorage.getItem('id_token')
+  signup (userData, history) {
+    db.findOne('users', { email: userData.email }, (err, user) => {
+      if (user && user.email === userData.email) {
+        alert('Email is already existe');
+      } else {
+        db.insert('users', userData, (err, createdUser) => {
+          this.setUser(createdUser);
+          history.replace('/profile');
+        })
+      }
+    })
   }
 
   logout () {
-    localStorage.removeItem('id_token');
+    localStorage.removeItem('current_user');
   }
 
-  getProfile () {
-    return decode(this.getToken());
+  loggedIn () {
+    const user = this.getUser();
+    return !!user
   }
 
+  setUser (currentUser) {
+    console.log(currentUser, 'setUser')
+    localStorage.setItem('current_user',  JSON.stringify(currentUser));
+  }
+
+  getUser () {
+    return localStorage.getItem('current_user');
+  }
 
   currentUser () {
-    const token = this.getToken()
-    const decoded = decode(token)
-    return axios.get(`${this.domain}/user/${decoded.id}`)
-      .then(res => {
-        return Promise.resolve(res.data);
-      })
-      .catch((err) => {
-        console.log(err.message)
-      })
+    const currentUser = this.getUser();
+    return JSON.parse(currentUser);
   }
 
   updateUser (user) {
-    const token = this.getToken()
-    const decoded = decode(token)
-    return axios.put(`${this.domain}/user/${decoded.id}`, {
-      user: user
-    },{
-      headers: {
-        'Access-Control-Allow-Origin': true,
-        'Content-Type': 'application/json',
-      }
-    })
-      .then(res => {
-        return Promise.resolve(res.data);
-      })
-      .catch((err) => {
-        console.log(err.message)
-      })
+    localStorage.removeItem('current_user');
+    localStorage.setItem('current_user', JSON.stringify(user));
   }
 
   updatePassword (user) {
-    return axios.put(`${this.domain}/update-password`, {
-      user: user
-    },{
-      headers: {
-        'Access-Control-Allow-Origin': true,
-        'Content-Type': 'application/json',
-      }
+    // const user = this.getUser();
+    // return user
+  }
+
+  getAllUser () {
+    db.find('users', (err, users) => {
+      console.log(users, 'alluser')
     })
-      .then(res => {
-        return Promise.resolve(res.data);
-      })
-      .catch((err) => {
-        console.log(err.message)
-      })
   }
 }

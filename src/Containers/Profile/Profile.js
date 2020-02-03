@@ -1,13 +1,15 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import DatePicker from "react-datepicker";
 
-import AuthService from '../../Services/auth';
+import AuthService from "../../Services/auth";
 
-import Navigation from '../../Components/Navigation/Navigation';
-import Footer from '../../Components/Footer/Footer';
+import Navigation from "../../Components/Navigation/Navigation";
+import Footer from "../../Components/Footer/Footer";
 
 import "react-datepicker/dist/react-datepicker.css";
-import './Profile.css';
+import "./Profile.css";
+
+import path from 'path'
 
 class Profile extends Component {
   constructor (props) {
@@ -31,18 +33,18 @@ class Profile extends Component {
 
   UNSAFE_componentWillMount () {
     if (this.Auth.loggedIn()) {
-      this.Auth.currentUser()
-        .then((data) => {
-          this.setState({
-            email: data.user.email,
-            phone: data.user.phone,
-            address: data.user.address,
-            birthDay: Date.parse(data.user.birthDay),
-          })
-        })
+      const currentUser = this.Auth.currentUser()
+      this.setState({
+        email: currentUser.email,
+        phone: currentUser.phone,
+        address: currentUser.address,
+        birthDay: Date.parse(currentUser.birthDay),
+      })
     } else {
       this.props.history.replace('/login');
     }
+    console.log(path.dirname('path/users.db'))
+    this.Auth.getAllUser()
   }
 
   render () {
