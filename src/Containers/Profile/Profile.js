@@ -1,13 +1,17 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import DatePicker from "react-datepicker";
 
-import AuthService from "../../Services/auth";
+import AuthService from '../../Services/auth';
 
-import Navigation from "../../Components/Navigation/Navigation";
-import Footer from "../../Components/Footer/Footer";
+import Navigation from '../../Components/Navigation/Navigation';
+import Footer from '../../Components/Footer/Footer';
 
 import "react-datepicker/dist/react-datepicker.css";
+<<<<<<< HEAD
 import "./Profile.css";
+=======
+import './Profile.css';
+>>>>>>> parent of bac30a5... Added nedb
 
 class Profile extends Component {
   constructor (props) {
@@ -32,6 +36,7 @@ class Profile extends Component {
 
   UNSAFE_componentWillMount () {
     if (this.Auth.loggedIn()) {
+<<<<<<< HEAD
       const currentUser = this.Auth.currentUser()
       this.setState({
         _id: currentUser._id,
@@ -46,6 +51,20 @@ class Profile extends Component {
     }
 
     this.Auth.getAllUser()
+=======
+      this.Auth.currentUser()
+        .then((data) => {
+          this.setState({
+            email: data.user.email,
+            phone: data.user.phone,
+            address: data.user.address,
+            birthDay: Date.parse(data.user.birthDay),
+          })
+        })
+    } else {
+      this.props.history.replace('/login');
+    }
+>>>>>>> parent of bac30a5... Added nedb
   }
 
   render () {
